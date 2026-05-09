@@ -1,41 +1,51 @@
-This README file contains information on the contents of the meta-rini layer.
+# meta-rini
 
-Please see the corresponding sections below for details.
+Custom Yocto Project meta-layer for embedded Linux development.
+Built and tested on Raspberry Pi 4 (64-bit) using Yocto Scarthgap (LTS).
 
-Dependencies
-============
+## Layer Contents
 
-  URI: <first dependency>
-  branch: <branch name>
+| Recipe         |              Description                      |
+|----------------|-----------------------------------------------|
+| system-monitor | Shell script service with systemd integration |
+| hello-embedded | C program demonstrating cross-compilation |
+| legacy-app | Migration example — Kirkstone to Scarthgap syntax |
 
-  URI: <second dependency>
-  branch: <branch name>
+## Compatibility
 
-  .
-  .
-  .
+| Yocto Release | Status |
+|---------------|--------|
+| Scarthgap (5.0 LTS) | ✓ Tested |
+| Kirkstone (4.0 LTS) | Migration reference only |
 
-Patches
-=======
+## Hardware Tested
 
-Please submit any patches against the meta-rini layer to the xxxx mailing list (xxxx@zzzz.org)
-and cc: the maintainer:
+- Raspberry Pi 4 (raspberrypi4-64 machine config)
+- BeagleBone Black (am335x BSP — Week 2)
 
-Maintainer: XXX YYYYYY <xxx.yyyyyy@zzzzz.com>
+## Key Learnings Demonstrated
 
-Table of Contents
-=================
+- Custom layer creation with layer.conf and LAYERSERIES_COMPAT
+- Recipe writing with do_compile, do_install, inherit autotools
+- bbappend for non-invasive upstream recipe modification
+- Kirkstone → Scarthgap migration (colon override syntax)
+- sstate-cache configuration for optimized builds
+- devtool modify/finish workflow for patch creation
+- systemd service integration via inherit systemd
 
-  I. Adding the meta-rini layer to your build
- II. Misc
+## Build Setup
 
+\`\`\`bash
+# Clone alongside poky:
+git clone -b scarthgap git://git.yoctoproject.org/poky.git
+git clone https://github.com/yourusername/meta-rini.git
 
-I. Adding the meta-rini layer to your build
-=================================================
+# Initialize build:
+source poky/oe-init-build-env build-rpi
 
-Run 'bitbake-layers add-layer meta-rini'
+# Add layer:
+bitbake-layers add-layer ../meta-rini
 
-II. Misc
-========
-
---- replace with specific information about the meta-rini layer ---
+# Build:
+MACHINE=raspberrypi4-64 bitbake core-image-minimal
+\`\`\`
