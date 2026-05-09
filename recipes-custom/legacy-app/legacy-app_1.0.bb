@@ -6,10 +6,10 @@ SRC_URI = "file://app.sh"
 S = "${WORKDIR}"
 
 # OLD STYLE - these will cause warnings/errors in Scarthgap:
-RDEPENDS_${PN} = "bash"
-FILES_${PN} = "${bindir}/app.sh"
+RDEPENDS:${PN} = "bash"
+FILES:${PN} = "${bindir}/app"
 
-do_install_append() {
+do_install:append(){
     install -d ${D}${bindir}
     install -m 0755 ${WORKDIR}/app.sh ${D}${bindir}/app
 }
